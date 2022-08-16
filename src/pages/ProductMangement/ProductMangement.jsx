@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FormProduct from "./FormProduct";
 import TableProduct from "./TableProduct";
+import axios from "axios";
 
 export default class ProductMangement extends Component {
   state = {
@@ -62,22 +63,56 @@ export default class ProductMangement extends Component {
   };
 
   //Cap nhat
-  editProduct =(prodEdit) => {
+  editProduct = (prodEdit) => {
     this.setState({
-      productEdit: prodEdit
-    })
-  }
+      productEdit: prodEdit,
+    });
+  };
+
+  updateProduct = (productUpdate) => {
+    //lay ra du lieu trong mang
+    let proUpdate = this.state.arrProduct.find(
+      (pro) => pro.id === productUpdate.id
+    );
+    if (proUpdate) {
+      for (let key in proUpdate) {
+        proUpdate[key] = productUpdate[key];
+      }
+    }
+    //sau khi thay doi thi set lai state
+    this.setState({
+      arrProduct: this.state.arrProduct,
+    });
+  };
   render() {
     return (
       <div className="container">
         <h3>Product Management</h3>
-        <FormProduct productEdit={this.state.productEdit} createProduct={this.createProduct} />
+        <FormProduct
+          productEdit={this.state.productEdit}
+          createProduct={this.createProduct}
+          updateProduct={this.updateProduct}
+        />
         <TableProduct
           arrProduct={this.state.arrProduct}
           delProduct={this.delProduct}
-          editProduct = {this.editProduct}
+          editProduct={this.editProduct}
         />
       </div>
     );
+  }
+  componentDidMount() {
+    let promise = axios({
+      url: "https://svcy.myclass.vn/api/product/getall",
+      method: "GET",
+    });
+    promise.then((result) => {
+      this.setState({
+        arrProduct: result.data,
+      });
+    });
+    promise.catch((err) => {
+      console.log(err);
+    });
   }
 }

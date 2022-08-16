@@ -18,6 +18,7 @@ export default class FormProduct extends Component {
       description: "",
     },
   };
+
   handleChange = (e) => {
     let { id, value } = e.target;
     let dataType = e.target.getAttribute("data-type");
@@ -51,6 +52,7 @@ export default class FormProduct extends Component {
       }
     );
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
     //check truoc khi submit du lieu
@@ -66,25 +68,36 @@ export default class FormProduct extends Component {
     //check value(productInfo) tat ca value phai khac rong
     for (let key in productInfo) {
       if (productInfo[key].trim() === "") {
-        errors[key] = key + " khong duoc bo trong"
+        errors[key] = key + " khong duoc bo trong";
         valid = false;
         //break;
       }
     }
-    if(!valid){
+    if (!valid) {
       this.setState({
-        errors : errors
-      })
-      alert("du lieu khong hop le")
-      return
+        errors: errors,
+      });
+      alert("du lieu khong hop le");
+      return;
     }
 
     //Hop le
     //alert("Submitted")
-    this.props.createProduct(productInfo)
+    this.props.createProduct(productInfo);
   };
+
+  static getDerivedStateFromProps(newProps, currentState) {
+    //Lay props.productEdit => gan vao state.productInfo => sau do giao dien lay ra tu state
+    if (newProps.productEdit.id !== currentState.productInfo.id) {
+      currentState.productInfo = newProps.productEdit;
+      return currentState; //ham nay se tao ra this.state moi
+    }
+    return null;
+  }
+
   render() {
-    let {id,name,price,img,description,productType} = this.props.productEdit
+    let { id, name, price, img, description, productType } =
+      this.state.productInfo;
     return (
       <form className="card" onSubmit={this.handleSubmit}>
         <div className="card-header">
@@ -97,7 +110,7 @@ export default class FormProduct extends Component {
             <div className="form-group">
               <p>Id</p>
               <input
-              value={id}
+                value={id}
                 className="form-control"
                 id="id"
                 name="id"
@@ -108,7 +121,7 @@ export default class FormProduct extends Component {
             <div className="form-group">
               <p>Name</p>
               <input
-              value={name}
+                value={name}
                 className="form-control"
                 id="name"
                 name="name"
@@ -119,7 +132,7 @@ export default class FormProduct extends Component {
             <div className="form-group">
               <p>Price</p>
               <input
-              value={price}
+                value={price}
                 data-type="number"
                 className="form-control"
                 id="price"
@@ -134,7 +147,7 @@ export default class FormProduct extends Component {
             <div className="form-group">
               <p>Img Link</p>
               <input
-              value={img}
+                value={img}
                 className="form-control"
                 id="img"
                 name="img"
@@ -145,7 +158,7 @@ export default class FormProduct extends Component {
             <div className="form-group">
               <p>Product Type</p>
               <select
-              value={productType}
+                value={productType}
                 name="productType"
                 id="productType"
                 className="form-control"
@@ -159,7 +172,7 @@ export default class FormProduct extends Component {
             <div className="form-group">
               <p>Product Description</p>
               <textarea
-              value={description}
+                value={description}
                 className="form-control"
                 name="description"
                 id="description"
@@ -172,7 +185,9 @@ export default class FormProduct extends Component {
         </div>
         <div className="card-footer">
           <button className="btn btn-success mx-2">Create</button>
-          <button className="btn btn-primary mx-2">Update</button>
+          <button type="button" className="btn btn-primary mx-2" onClick={() => {
+            this.props.updateProduct(this.state.productInfo)
+          }}>Update</button>
         </div>
       </form>
     );
