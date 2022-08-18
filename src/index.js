@@ -18,6 +18,7 @@ import DemoTangGiamSoLuong from "./pages/DemoRedux/DemoTangGiamSoLuong/DemoTangG
 import DemoChangeColor from "./pages/DemoRedux/DemoChangeColor/DemoChangeColor";
 import DemoQLSV from "./pages/DemoRedux/DemoQLSV/DemoQLSV";
 import ReactLifeCycle from "./ReactLifeCycle/ReactLifeCycle";
+import DemoGioHang from "./pages/DemoRedux/DemoGioHang/DemoGioHang";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -36,6 +37,7 @@ root.render(
           <Route path="demoredux" element={<DemoTangGiamSoLuong />}></Route>
           <Route path="demoreduxcolor" element={<DemoChangeColor />}></Route>
           <Route path="demoQLSV" element={<DemoQLSV />}></Route>
+          <Route path="demogiohang" element={<DemoGioHang />}></Route>
           {/* <Route path="*" element={<Page404 />}></Route> */}
           <Route path="*" element={<Navigate to="" />}></Route>
         </Route>

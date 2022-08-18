@@ -110,6 +110,9 @@ function App() {
                 <NavLink className="dropdown-item" to="demoQLSV">
                   QLSV
                 </NavLink>
+                <NavLink className="dropdown-item" to="demogiohang">
+                  Gio Hang
+                </NavLink>
               </div>
             </li>
           </ul>

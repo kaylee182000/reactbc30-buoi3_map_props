@@ -1,5 +1,5 @@
 //rcc
-import React, { Component, PureComponent } from "react";
+import React, { PureComponent } from "react";
 
 /*
   Purecomponent: là component không có lifecycle shouldComponentUpdate, nó sẽ tự xử lý render lại khi props thay đổi (đối với props là primitive value: number, string, boolean,undefined,null). Đối với reference value thì cần tạo biến địa chỉ mới và clone dữ liệu ra = spread operator ({...}, [...])
