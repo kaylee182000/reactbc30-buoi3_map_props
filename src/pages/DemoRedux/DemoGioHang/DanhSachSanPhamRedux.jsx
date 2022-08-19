@@ -3,11 +3,21 @@ import { connect } from "react-redux";
 import SanPhamRedux from "./SanPhamRedux";
 
 class DanhSachSanPhamRedux extends Component {
+  renderSanPham = () => {
+    let {arrSanPham} = this.props
+    return arrSanPham.map((sp,index) => {
+      return <div className="col-4" key={index}>
+      <SanPhamRedux sp={sp}/>
+    </div>
+    })
+  }
   render() {
     return (
-      <div className="danh-sach-san-pham">
+      <div className="danh-sach-san-pham mt-2">
+        <h3>Danh sach san pham</h3>
         <div className="row">
-          <div className="col-4">
+          {this.renderSanPham()}
+          {/* <div className="col-4">
             <SanPhamRedux />
           </div>
           <div className="col-4">
@@ -15,12 +25,14 @@ class DanhSachSanPhamRedux extends Component {
           </div>
           <div className="col-4">
             <SanPhamRedux />
-          </div>
+          </div> */}
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  arrSanPham: state.demoGioHangReducer.arrSanPham
+});
 
 export default connect(mapStateToProps)(DanhSachSanPhamRedux);
